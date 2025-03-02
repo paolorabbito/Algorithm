@@ -1,3 +1,8 @@
+/**
+* Complexity worst case: O(n^2)
+* Complexity average case: O(n^2)
+* Complexity best case: O(n^2)
+**/
 export function selectionSort(arr: number[]): number[] {
     const n = arr.length;
 
