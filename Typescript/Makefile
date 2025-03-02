@@ -1,4 +1,3 @@
-.PHONY: test build run
-
+.PHONY: test
 test:
 	npm run test
