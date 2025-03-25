@@ -1,48 +1,47 @@
-export class MaxHeap {
-    heap: number[];
-    private size: number;
+export function buildMaxHeap(arr: number[]): void {
+    const start = Math.floor((arr.length - 2)/2);
+    for (let i = start; i >= 0; i--) {
+        maxHeapify(arr, i, arr.length);
+    }
+}
 
-    constructor(heap: number[] = []) {
-        this.heap = heap;
-        this.size = heap.length;
-        this.buildMaxHeap();
+export function maxHeapify(arr: number[], i: number, size: number): void {
+    const left = getLeftIndex(i);
+    const right = getRightIndex(i);
+    let largest = i;
+
+    if (left < size && arr[left] > arr[largest]) {
+        largest = left;
     }
 
-    public buildMaxHeap() {
-        const start = Math.floor((this.size - 2)/2)
-        for (let i = start; i >= 0; i--) {
-            this.maxHeapify(i);
-        }
+    if (right < size && arr[right] > arr[largest]) {
+        largest = right;
     }
 
-    public maxHeapify(i: number) {
-        const left = this.getLeftIndex(i);
-        const right = this.getRightIndex(i);
-        let largest = i;
-
-        if ((left <= this.size - 1) && this.heap[left] > this.heap[largest]) {
-            largest = left;
-        }
-
-        if ((right <= this.size - 1) && this.heap[right] > this.heap[largest]) {
-            largest = right;
-        }
-
-        if (largest != i) {
-            [this.heap[i], this.heap[largest]] = [this.heap[largest], this.heap[i]];
-            this.maxHeapify(largest);
-        }
+    if (largest != i) {
+        [arr[i], arr[largest]] = [arr[largest], arr[i]];
+        maxHeapify(arr, largest, size);
     }
+}
 
-    getParentIndex(i: number): number {
-        return Math.floor((Math.abs(i - 1))/2);
-    }
+export function getParentIndex(i: number): number {
+    return Math.floor((Math.abs(i - 1))/2);
+}
 
-    getLeftIndex(i: number) {
-        return 2*i + 1;
-    }
+export function getLeftIndex(i: number) {
+    return 2*i + 1;
+}
 
-    getRightIndex(i: number): number {
-        return (2*i + 2);
+export function getRightIndex (i: number): number {
+    return (2*i + 2);
+}
+
+export function heapSort(arr: number[], size: number): void {
+    buildMaxHeap(arr);
+
+    for (let i = size -1; i > 0; i--) {
+        [arr[0], arr[i]] = [arr[i], arr[0]];
+        size = size - 1;
+        maxHeapify(arr, 0, size)
     }
 }
